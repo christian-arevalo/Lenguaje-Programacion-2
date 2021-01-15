@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Conceptos básicos de objetos JavaScript</title>
+</head>
+<body>
+
+<script>
+
+    //creación del objeto
+    //let persona = {};
+    //console.log(persona);
+
+    //agregando datos al objeto
+    let persona = {
+        nombre: ['Pepe', 'Grillo'],
+        edad: 18,
+        genero: 'Masculino',
+        interes: ['Programación', 'Matemáticas'],
+        bio: function () {
+            alert(this.nombre[0] + ' ' + this.nombre[1] + 'tiene ' + this.edad + ' años. Le gusta ' + this.interes[0] + ' y ' + this.interes[1] + '.');
+        },
+        saludo: function () {
+            alert('Hola, soy ' + this.nombre[0] + '.');
+        }
+    }
+
+    //Nombres secundarios
+
+
+    //Establecer elementos a nuestros objetos
+    persona.edad = 21;
+    persona['edad'] = 19;
+
+    //creando nuevos elementos
+    persona['pais'] = 'Perú';
+
+    persona.despedida = function () {
+        alert("Adios mundo cruel");
+    }
+
+    //Agregamos valores personalizados
+
+
+</script>
+</body>
+</html>
