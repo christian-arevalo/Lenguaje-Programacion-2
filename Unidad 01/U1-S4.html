@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript orientado a objetos</title>
+</head>
+<body>
+
+<script>
+
+    function crearPersona(nombre) {
+        let obj = {};
+        obj.nombre  = nombre;
+        obj.saludar = function () {
+            alert("Mi nombre es : " + this.nombre + ".");
+        };
+        return obj;
+    }
+
+    let carlos = crearPersona('carlos');
+
+    function Persona(nombre, apellido) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.saludar = function () {
+            alert("Mi nombre es : " + this.nombre + " " + this.apellido + ".");
+        }
+    }
+
+    let persona1 = new Persona('christian', 'Arevalo');
+    let persona2 = new Persona('Juan', 'Gonzales');
+
+
+</script>
+</body>
+</html>
