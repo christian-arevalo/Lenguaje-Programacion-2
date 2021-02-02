@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Prototipo de objetos</title>
+</head>
+<body>
+
+<script>
+
+    function Person(nombre, apellido, edad, genero, interes) {
+        this.nombres = {
+            'nombre': nombre,
+            'apellido' : apellido
+        };
+        this.edad = edad;
+        this.genero = genero;
+        this.interes = interes;
+        this.bio = function() {
+            // First define a string, and make it equal to the part of
+            // the bio that we know will always be the same.
+            var string = this.nombres.nombre + ' ' + this.nombres.apellido + ' tiene ' + this.edad + ' años. ';
+            // define a variable that will contain the pronoun part of
+            // the second sentence
+            var pronoun;
+
+            // check what the value of genero is, and set pronoun
+            // to an appropriate value in each case
+            if(this.genero === 'masculino' || this.genero === 'Masculino' || this.genero === 'm' || this.genero === 'M') {
+                pronoun = 'He likes ';
+            } else if(this.genero === 'femenino' || this.genero === 'Femenino' || this.genero === 'f' || this.genero === 'F') {
+                pronoun = 'A El le gusta ';
+            } else {
+                pronoun = 'A Ella le gusta ';
+            }
+
+            // add the pronoun string on to the end of the main string
+            string += pronoun;
+
+            // use another conditional to structure the apellido part of the
+            // second sentence depending on whether the number of interes
+            // is 1, 2, or 3
+            if(this.interes.length === 1) {
+                string += this.interes[0] + '.';
+            } else if(this.interes.length === 2) {
+                string += this.interes[0] + ' y ' + this.interests[1] + '.';
+            } else {
+                // if there are more than 2 interes, we loop through them
+                // all, adding each one to the main string followed by a comma,
+                // except for the apellido one, which needs an and & a full stop
+                for(var i = 0; i < this.interes.length; i++) {
+                    if(i === this.interes.length - 1) {
+                        string += 'y ' + this.interes[i] + '.';
+                    } else {
+                        string += this.interes[i] + ', ';
+                    }
+                }
+            }
+
+            // finally, with the string built, we alert() it
+            alert(string);
+        };
+        this.greeting = function() {
+            alert('Hi! I\'m ' + this.nombres.nombre + '.');
+        };
+    };
+
+    let person1 = new Person('Tammi', 'Smith', 32, 'neutral', ['música', 'leer', 'programar']);
+</script>
+</body>
+</html>
