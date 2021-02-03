@@ -31,6 +31,48 @@
     let persona2 = new Persona('Juan', 'Gonzales');
 
 
+    function Persona(nombre, apellido, edad, genero, interes) {
+
+        //Atributos de la clase
+        this.nombres = {
+            'nombre' : nombre,
+            'apellido' : apellido
+        }
+        this.edad = edad;
+        this.genero = genero;
+        this.intereses = interes;
+
+
+        //Los metodos de la clase
+        this.bio = function () {
+            alert(this.nombres.nombre + " " + this.nombres.apellido + " tiene " + this.edad + " años. Le gusta " + this.intereses[0] + " y " + this.intereses[1] + ".");
+        }
+        this.saludar = function () {
+            alert("Hola! Soy " + this.nombres.nombre + ".");
+        }
+    }
+
+    //Instanciar los objetos partiendo de la clase
+    let persona3 = new Persona("Pepe", "Grillo", 18, "Masculino", ['leer', 'programar']);
+
+    let persona4 = new Object();
+
+    persona4.nombre = "Christian";
+    persona4['edad'] = 28;
+    persona4.saludar = function () {
+        alert("Hola! soy " + this.nombre + ".");
+    }
+
+    let persona5 = new Object(
+        {
+            nombre: "Christian",
+            edad : 28,
+            saludar : function () {
+                alert("Hola! soy " + this.nombre + ".");
+            }
+        }
+    );
+
 </script>
 </body>
 </html>
