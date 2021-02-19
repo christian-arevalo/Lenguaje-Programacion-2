@@ -1,52 +1,58 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ATM</title>
-</head>
-<body>
-
+  </head>
+  <body>
     <h1>ATM</h1>
-    
+
     <div id="principal">
-        <h2>Menu Principal</h2>
-        <ol id="menu-lista">
-            <li>Administrador</li>
-            <li>Clientes</li>
-        </ol>
-        <p>Elegir opción:</p>
-        <input type="text" id="menu-seleccion-1" placeholder="Ingresar opción">
-        <button id="btn-enviar-1">Enviar</button>
-        <span id="mensaje-1"></span>
+      <h2>Menu Principal</h2>
+      <ol id="menu-lista">
+        <li>Administrador</li>
+        <li>Clientes</li>
+      </ol>
+      <p>Elegir opción:</p>
+      <input type="text" id="menu-seleccion-1" placeholder="Ingresar opción" />
+      <button id="btn-enviar-1">Enviar</button>
+      <span id="mensaje-1"></span>
     </div>
-    
+
     <div id="admin">
-        <h2>Administrador</h2>
-        <ol id="menu-lista">
-            <li>Registrar Clientes</li>
-            <li>Agregar Dinero</li>
-            <li>Salir</li>
-        </ol>
-        <input type="text" id="menu-seleccion-2" placeholder="Ingresar Opcion">
-        <button id="btn-enviar-2">Enviar</button>
-         <span id="mensaje-2"></span>
+      <h2>Administrador</h2>
+      <ol id="menu-lista">
+        <li>Registrar Clientes</li>
+        <li>Agregar Dinero</li>
+        <li>Salir</li>
+      </ol>
+      <input type="text" id="menu-seleccion-2" placeholder="Ingresar Opcion" />
+      <button id="btn-enviar-2">Enviar</button>
+      <span id="mensaje-2"></span>
     </div>
 
     <div id="clientes">
-        <h2>Clientes</h2>
-        <ol id="lista-menu">
-            <li>Ver Saldo</li>
-            <li>Realizar Transferencia</li>
-            <li>Retirar Dinero</li>
-            <li>Salir</li>
-        </ol>
-        <input type="text" id="menu-seleccion-3" placeholder="Ingresar Opcion">
-        <button id="btn-enviar-3">Enviar</button>
-        <span id="mensaje-3"></span>
+      <h2>Clientes</h2>
+      <ol id="lista-menu">
+        <li>Ver Saldo</li>
+        <li>Realizar Transferencia</li>
+        <li>Retirar Dinero</li>
+        <li>Salir</li>
+      </ol>
+      <input type="text" id="menu-seleccion-3" placeholder="Ingresar Opcion" />
+      <button id="btn-enviar-3">Enviar</button>
+      <span id="mensaje-3"></span>
     </div>
 
     <div id="operaciones"></div>
     <script src="app.js"></script>
-</body>
+
+    <style>
+      * {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1rem;
+      }
+    </style>
+  </body>
 </html>
