@@ -67,7 +67,7 @@ class Cliente extends Persona {
   }
 
   get saldo() {
-    return "Su Saldo es S/" + this._saldo;
+    return this._saldo;
   }
 
   set saldo(newSaldo) {
@@ -259,7 +259,7 @@ function menuClientes() {
             if (contador > 0) {
               mensaje.textContent = "";
               clienteEncontrado.saludar();
-              alert(clienteEncontrado.saldo);
+              alert("Su Saldo es S/ " + clienteEncontrado.saldo);
 
               while (operaciones.firstChild) {
                 operaciones.removeChild(operaciones.firstChild);
@@ -286,18 +286,66 @@ function menuClientes() {
           operaciones.appendChild(btnValidar);
 
           btnValidar.addEventListener("click", function () {
+            contador = 0;
+            let envio;
+            let recibe;
+            let saldoEnvia;
+            let saldoRecibe;
             if (inputEnvia.value === "" || inputRecibe.value === "") {
               mensaje.textContent = "Debe llenar todos los campos";
             } else {
               mensaje.textContent = "";
               for (let i = 0; i < clientes.length; i++) {
-              
                 if (inputEnvia.value === clientes[i].cuenta) {
-
-                  break
-                } else {
-                  mensaje.textContent = "La cuenta de envio no existe"
+                  envio = i
+                  contador++;
                 }
+
+                if (inputRecibe.value === clientes[i].cuenta) {
+                  recibe = i
+                  contador++;
+                }
+              }
+
+              if (contador > 1) {
+                let tituloRecibe = document.createElement('h3')
+                tituloRecibe.textContent = "Transferir a " + clientes[recibe].nombres.nombre + " " + clientes[recibe].nombres.apellido
+                operaciones.appendChild(tituloRecibe)
+                let inputMonto = document.createElement("input");
+                inputMonto.placeholder = "Monto S/";
+                operaciones.appendChild(inputMonto);
+                let btnTransferir = document.createElement("button");
+                btnTransferir.textContent = "Transferir";
+                operaciones.appendChild(btnTransferir);
+
+                btnTransferir.addEventListener("click", function () {
+                  if (Number(inputMonto.value) > 0) {
+                    if (Number(inputMonto.value <= clientes[envio].saldo)) {
+                      mensaje.textContent = "";
+                      saldoEnvia = clientes[envio].saldo - Number(inputMonto.value)
+                      clientes[envio].saldo = saldoEnvia
+
+                      saldoRecibe = clientes[recibe].saldo + Number(inputMonto.value)
+                      clientes[recibe].saldo = saldoRecibe
+
+                      alert("Transferencia Exitosa, Su saldo es S/ " + clientes[envio].saldo)
+
+                      while (operaciones.firstChild) {
+                        operaciones.removeChild(operaciones.firstChild);
+                      }
+        
+                      menuSeleccion.disabled = false;
+                      btnEnviar.disabled = false;
+
+                    } else {
+                      mensaje.textContent = "Saldo insuficiente";
+                    }
+                  } else {
+                    mensaje.textContent = "Monto invalido";
+                  }
+                });
+              } else {
+                mensaje.textContent = "Cuentas erroneas";
               }
             }
           });
