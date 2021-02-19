@@ -13,6 +13,9 @@ let opcionMenu;
 let menuSeleccion;
 let btnEnviar = document.getElementById("btn-enviar-1");
 let mensaje;
+let clienteDatos;
+let contador;
+let dineroAtm = 0;
 
 let clientes = [];
 let clientesInput = [
@@ -24,9 +27,7 @@ let clientesInput = [
   "Cuenta",
   "Saldo S/",
 ];
-let clienteDatos;
-let contador;
-let dineroAtm = 0;
+
 
 //Creacion de clases
 class Persona {
