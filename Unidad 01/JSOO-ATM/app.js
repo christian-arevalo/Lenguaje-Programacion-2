@@ -28,7 +28,6 @@ let clientesInput = [
   "Saldo S/",
 ];
 
-
 //Creacion de clases
 class Persona {
   constructor(nombre, apellido, dni, genero, edad) {
@@ -44,9 +43,9 @@ class Persona {
   saludar() {
     let textoSaludo = "Bienvenido ";
 
-    if (this.genero === "1") {
+    if (this.genero === "Masculino" || "masculino") {
       textoSaludo += "Sr. ";
-    } else if (this.genero === "0") {
+    } else if (this.genero === "Femenino" || "femenino") {
       textoSaludo += "Sra. ";
     }
 
@@ -168,6 +167,7 @@ function menuAdministrador() {
                 Number(clienteDatos[6].value)
               );
               clientes.push(cliente);
+              //localStorage.setItem("clientes", JSON.stringify(clientes));
               cliente.saludar();
 
               while (operaciones.firstChild) {
@@ -181,6 +181,9 @@ function menuAdministrador() {
         case 2:
           btnEnviar.disabled = true;
           menuSeleccion.disabled = true;
+          let tituloDinero = document.createElement("h3");
+          tituloDinero.textContent = "DINERO EN CAJA S/ " + dineroAtm;
+          operaciones.appendChild(tituloDinero);
           let inputDinero = document.createElement("input");
           inputDinero.placeholder = "Ingresar Monto";
           operaciones.appendChild(inputDinero);
@@ -189,7 +192,7 @@ function menuAdministrador() {
           operaciones.appendChild(btnEnviar3);
 
           btnEnviar3.addEventListener("click", function () {
-            if (Number(inputDinero.value) < 0) {
+            if (Number(inputDinero.value) <= 0) {
               mensaje.textContent = "Monto invalido";
             } else {
               mensaje.textContent = "";
@@ -298,20 +301,24 @@ function menuClientes() {
               mensaje.textContent = "";
               for (let i = 0; i < clientes.length; i++) {
                 if (inputEnvia.value === clientes[i].cuenta) {
-                  envio = i
+                  envio = i;
                   contador++;
                 }
 
                 if (inputRecibe.value === clientes[i].cuenta) {
-                  recibe = i
+                  recibe = i;
                   contador++;
                 }
               }
 
               if (contador > 1) {
-                let tituloRecibe = document.createElement('h3')
-                tituloRecibe.textContent = "Transferir a " + clientes[recibe].nombres.nombre + " " + clientes[recibe].nombres.apellido
-                operaciones.appendChild(tituloRecibe)
+                let tituloRecibe = document.createElement("h3");
+                tituloRecibe.textContent =
+                  "Transferir a " +
+                  clientes[recibe].nombres.nombre +
+                  " " +
+                  clientes[recibe].nombres.apellido;
+                operaciones.appendChild(tituloRecibe);
                 let inputMonto = document.createElement("input");
                 inputMonto.placeholder = "Monto S/";
                 operaciones.appendChild(inputMonto);
@@ -323,21 +330,25 @@ function menuClientes() {
                   if (Number(inputMonto.value) > 0) {
                     if (Number(inputMonto.value <= clientes[envio].saldo)) {
                       mensaje.textContent = "";
-                      saldoEnvia = clientes[envio].saldo - Number(inputMonto.value)
-                      clientes[envio].saldo = saldoEnvia
+                      saldoEnvia =
+                        clientes[envio].saldo - Number(inputMonto.value);
+                      clientes[envio].saldo = saldoEnvia;
 
-                      saldoRecibe = clientes[recibe].saldo + Number(inputMonto.value)
-                      clientes[recibe].saldo = saldoRecibe
+                      saldoRecibe =
+                        clientes[recibe].saldo + Number(inputMonto.value);
+                      clientes[recibe].saldo = saldoRecibe;
 
-                      alert("Transferencia Exitosa, Su saldo es S/ " + clientes[envio].saldo)
+                      alert(
+                        "Transferencia Exitosa, Su saldo es S/ " +
+                          clientes[envio].saldo
+                      );
 
                       while (operaciones.firstChild) {
                         operaciones.removeChild(operaciones.firstChild);
                       }
-        
+
                       menuSeleccion.disabled = false;
                       btnEnviar.disabled = false;
-
                     } else {
                       mensaje.textContent = "Saldo insuficiente";
                     }
@@ -351,6 +362,89 @@ function menuClientes() {
             }
           });
 
+          break;
+        case 3:
+          let inputCuentaRetiro = document.createElement("input");
+          inputCuentaRetiro.placeholder = "Ingrese su Cuenta";
+          operaciones.appendChild(inputCuentaRetiro);
+          let btnValidarCuenta = document.createElement("button");
+          btnValidarCuenta.textContent = "Validar";
+          operaciones.appendChild(btnValidarCuenta);
+
+          let pCliente;
+
+          btnValidarCuenta.addEventListener("click", function () {
+            contador = 0;
+            if (inputCuentaRetiro.value === "") {
+              mensaje.textContent = "Debe ingresar la cuenta";
+            } else {
+              mensaje.textContent = "";
+              for (let i = 0; i < clientes.length; i++) {
+                if (inputCuentaRetiro.value === clientes[i].cuenta) {
+                  pCliente = i;
+                  contador++;
+                }
+              }
+
+              if (contador > 0) {
+                mensaje.textContent = "";
+                clientes[pCliente].saludar();
+
+                let inputMontoRetiro = document.createElement("input");
+                inputMontoRetiro.placeholder = "Ingrese Monto S/";
+                operaciones.appendChild(inputMontoRetiro);
+                let btnRetirar = document.createElement("button");
+                btnRetirar.textContent = "Retirar";
+                operaciones.appendChild(btnRetirar);
+                let nuevoSaldo;
+
+                btnRetirar.addEventListener("click", function () {
+                  if (
+                    Number(inputMontoRetiro.value) <= 0 ||
+                    inputMontoRetiro.value === ""
+                  ) {
+                    mensaje.textContent = "Monto invalido";
+                  } else {
+                    mensaje.textContent = "";
+                    if (
+                      clientes[pCliente].saldo >= Number(inputMontoRetiro.value)
+                    ) {
+                      if (dineroAtm >= Number(inputMontoRetiro.value)) {
+                        mensaje.textContent = "";
+                        nuevoSaldo =
+                          clientes[pCliente].saldo -
+                          Number(inputMontoRetiro.value);
+                        dineroAtm -= Number(inputMontoRetiro.value);
+                        clientes[pCliente].saldo = nuevoSaldo;
+                        alert(
+                          "retiro Exitoso, Su Saldo es S/ " +
+                            clientes[pCliente].saldo
+                        );
+
+                        while (operaciones.firstChild) {
+                          operaciones.removeChild(operaciones.firstChild);
+                        }
+                        btnEnviar.disabled = false;
+                        menuSeleccion.disabled = false;
+                      } else {
+                        mensaje.textContent =
+                          "El cajero no cuenta con suficiente efectivo";
+                      }
+                    } else {
+                      mensaje.textContent = "Su saldo es insuficiente";
+                      alert("Su saldo es " + clientes[pCliente].saldo);
+                    }
+                  }
+                });
+              } else {
+                mensaje.textContent = "No se encontro cuenta";
+              }
+            }
+          });
+          break;
+        case 4:
+          menuM.style.display = "block";
+          clientesM.style.display = "none";
           break;
       }
     }
@@ -376,5 +470,6 @@ let cliente1 = new Cliente(
   "12345678",
   50
 );
+
 clientes.push(cliente);
 clientes.push(cliente1);
